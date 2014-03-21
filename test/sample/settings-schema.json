@@ -1,0 +1,218 @@
+{
+    "title": "Sample Schema",
+    "description": "Schema for JS application settings",
+    "type": "object",
+    "properties": {
+        "moduleName1": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/productizataionSettings"
+                }
+            ],
+            "required": true
+        },
+        "moduleName2": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/authSettings"
+                }
+            ],
+            "required": true
+        }
+    },
+    "required": [
+        "moduleName1",
+        "moduleName2"
+    ],
+    "definitions": {
+        "productizataionSettings": {
+            "description": "authentication core settings",
+            "type": "object",
+            "properties": {
+                "sessionTtl": {
+                    "description": "how long the session should remain active before the session expired event is triggered",
+                    "type": "integer",
+                    "default": 300
+                },
+                "productDataAuthStateRequired": {
+                    "description": "what auth state is required to fetch product data for use in determining auth requirements",
+                    "type": "string",
+                    "default": "AuthenticatedVerified"
+                },
+                "stateLevels": {
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/stateLevels"
+                        }
+                    ]
+                },
+                "productizataionSessionEvents": {
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/productizataionSessionEvents"
+                        }
+                    ]
+                }
+            }
+        },
+        "productizataionSessionEvents": {
+            "description": "a mapping of session related event types and what should happen in those cases",
+            "type": "object",
+            "properties": {
+                "end": {
+                    "description": "event for when a session is ended, usually due to switching user e.g. logout",
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/authSessionEvent"
+                        }
+                    ],
+                    "default": {
+                        "authState": "Unauthenticated",
+                        "uiState": "login"
+                    }
+                },
+                "timeout": {
+                    "description": "event for when a session expires",
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/authSessionEvent"
+                        }
+                    ],
+                    "default": {
+                        "authState": "Identified",
+                        "uiState": "main"
+                    }
+                }
+            },
+            "required": [
+                "end",
+                "timeout"
+            ]
+        },
+        "stateLevels": {
+            "description": "a mapping of state names to state level, for allowing pass-through to lower levels based on a higher state",
+            "type": "object",
+            "properties": {
+                "Unauthenticated": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "Identified": {
+                    "type": "integer",
+                    "default": 1
+                },
+                "IdentifiedVerified": {
+                    "type": "integer",
+                    "default": 2
+                },
+                "Authenticated": {
+                    "type": "integer",
+                    "default": 3
+                },
+                "AuthenticatedVerified": {
+                    "type": "integer",
+                    "default": 4
+                }
+            },
+            "required": [
+                "Unauthenticated",
+                "Identified",
+                "IdentifiedVerified",
+                "Authenticated",
+                "AuthenticatedVerified"
+            ]
+        },
+        "authSessionEvent": {
+            "description": "info about what should happen when a particular session related event occurs",
+            "type": "object",
+            "properties": {
+                "authState": {
+                    "description": "the auth state the user should be transitioned to when the session related event occurs",
+                    "type": "string"
+                },
+                "uiState": {
+                    "description": "the UI state defined by ui-router component that the user should be sent to if their level of privileges is no longer suitable for the current state when the session related event occurs",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "authState",
+                "uiState"
+            ]
+        },
+        "authSettings": {
+            "description": "authentication core settings",
+            "type": "object",
+            "properties": {
+                "sessionTtl": {
+                    "description": "how long the session should remain active before the session expired event is triggered",
+                    "type": "integer",
+                    "default": 700
+                },
+                "productDataAuthStateRequired": {
+                    "description": "what auth state is required to fetch product data for use in determining auth requirements",
+                    "type": "string",
+                    "default": "AuthenticatedPending"
+                },
+                "stateLevels": {
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/stateLevels"
+                        }
+                    ]
+                },
+                "authSessionEvents": {
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/authSessionEvents"
+                        }
+                    ]
+                }
+            }
+        },
+        "authSessionEvents": {
+            "description": "a mapping of session related event types and what should happen in those cases",
+            "type": "object",
+            "properties": {
+                "end": {
+                    "description": "event for when a session is ended, usually due to switching user e.g. logout",
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/authSessionEvent"
+                        }
+                    ],
+                    "default": {
+                        "authState": "Unauthenticated",
+                        "uiState": "login"
+                    }
+                },
+                "timeout": {
+                    "description": "event for when a session expires",
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/authSessionEvent"
+                        }
+                    ],
+                    "default": {
+                        "authState": "Identified",
+                        "uiState": "main"
+                    }
+                }
+            },
+            "required": [
+                "end",
+                "timeout"
+            ]
+        }
+    }
+}
