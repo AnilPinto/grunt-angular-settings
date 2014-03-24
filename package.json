@@ -1,8 +1,11 @@
 {
   "name": "grunt-angular-settings",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Read settings-schema.json and settings.json files, validate them json-settings-schema and then create a angular constant for each setting and save them in settings.js file.",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnilPinto/grunt-angular-settings.git"
+  },
   "author": {
     "name": "Anil Pinto",
     "email": "anil.leo.pinto@gmail.com"
