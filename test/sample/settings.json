@@ -1,9 +1,44 @@
 {
-    "moduleName1": {
+    "auth": {
         "sessionTtl": 500,
-        "productDataAuthStateRequired": "AuthenticatedVerified"
+        "productDataAuthStateRequired": "AuthenticatedVerified",
+        "stateLevels": {
+            "Unauthenticated": 0,
+            "Identified": 1,
+            "IdentifiedVerified": 2,
+            "Authenticated": 3,
+            "AuthenticatedVerified": 4
+        },
+        "authSessionEvents": {
+            "end": {
+                "authState": "Unauthenticated",
+                "uiState": "login"
+            },
+            "timeout": {
+                "authState": "Identified",
+                "uiState": "auth.success"
+            }
+        }
     },
-    "moduleName2": {
-        "sessionTtl": 1000
+    "productizataion": {
+        "sessionTtl": 700,
+        "productDataAuthStateRequired": "AuthenticatedPending",
+        "stateLevels": {
+            "Unauthenticated": 1234,
+            "Identified": 1,
+            "IdentifiedVerified": 2,
+            "Authenticated": 3,
+            "AuthenticatedVerified": 4
+        },
+        "productizataionSessionEvents": {
+            "end": {
+                "authState": "Unauthenticated",
+                "uiState": "login"
+            },
+            "timeout": {
+                "authState": "Identified",
+                "uiState": "product.State"
+            }
+        }
     }
 }

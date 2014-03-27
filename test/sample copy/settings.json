@@ -1,0 +1,9 @@
+{
+    "moduleName1": {
+        "sessionTtl": 500,
+        "productDataAuthStateRequired": "AuthenticatedVerified"
+    },
+    "moduleName2": {
+        "sessionTtl": 1000
+    }
+}

@@ -34,8 +34,7 @@ module.exports = function (grunt) {
         generateSettings: {
             options: {
                 dest: 'tmp/settings.js',
-                schema: 'test/sample/settings-schema.json',
-                settings:'test/sample/settings.json',
+                settings: 'test/sample/settings.json'
             }
         }
       },

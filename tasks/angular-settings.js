@@ -7,17 +7,16 @@
  */
 
 'use strict';
-var jsonSettingsSchema = require('json-settings-schema');
 
 module.exports = function (grunt) {
 
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
-    grunt.registerMultiTask('angularSettings', 'Read settings-schema.json and settings.json files, validate them json-settings-schema and then create a angular constant for each setting and save them in settings.js file.', function () {
+    grunt.registerMultiTask('angularSettings', 'Read settings.json and create a angular constant for each setting and save them in settings.js file.', function () {
 
-        if(!isFileExist(this.data.options.schema)) {
-            throw new TypeError('AngularSettings: \'schema\' is missing');
+        if(!isFileExist(this.data.options.settings)) {
+            throw new TypeError('AngularSettings: \'settings\' is missing');
         }
 
         if(this.data.options.dest == null) {
@@ -25,29 +24,16 @@ module.exports = function (grunt) {
         }
 
         var settingsData = "",
-            settingsOverrides = null,
             destFullFilepath = process.cwd() + "/" + this.data.options.dest,
-            schemaFullFilepath = process.cwd() + "/" + this.data.options.schema,
-            schema = grunt.file.readJSON(schemaFullFilepath);
+            settingsFullFilepath = process.cwd() + "/" + this.data.options.settings,
+            settingsJSON = grunt.file.readJSON(settingsFullFilepath);
 
 
-        if(isFileExist(this.data.options.settings)) {
-            var filepath = process.cwd() + "/" + this.data.options.settings;
-            settingsOverrides = grunt.file.readJSON(filepath);
-        }
-
-        jsonSettingsSchema.buildSettings(settingsOverrides, schema, function (err, settings) {
-
-            if(err) {
-                throw err;
-            }
-
-            for(var key in settings) {
-                settingsData += "angular.module('" + key + "').constant('" + key + "Settings', " + JSON.stringify(settings[key] , null, 4) + ");\n";
+            for(var key in settingsJSON) {
+                settingsData += "angular.module('" + key + "').constant('" + key + "Settings', " + JSON.stringify(settingsJSON[key] , null, 4) + ");\n";
             }
 
             grunt.file.write(destFullFilepath,settingsData);
-        });
     });
 
     /**
