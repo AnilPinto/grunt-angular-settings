@@ -32,15 +32,15 @@ module.exports = function (grunt) {
         },
         angularSettings: {
             options: {
-                postfix: 'Settings',
-                timestamp: '`A FEW SECONDS AGO`'
+                timestamp: '`A FEW SECONDS AGO`',
+                postfix: 'Settings'
             },
             target: {
                 settings: {
                     'tmp/settings-1.js': [
-                        'test/sample/settings-1.json'
+                        'test/sample-input/settings-1*'
                     ],
-                    'tmp/settings-2.js': 'test/sample/settings-2.json'
+                    'tmp/settings-2.js': 'test/sample-input/settings-2.json'
                 }
             }
         },

@@ -33,12 +33,12 @@ exports.angularSettings = {
         var actual, expected;
 
         actual = grunt.file.read('tmp/settings-1.js');
-        expected = grunt.file.read('test/expected/settings-1.js');
+        expected = grunt.file.read('test/expected-output/settings-1.js');
         test.equal(actual, expected, 'generates settings file as expected');
 
 
         actual = grunt.file.read('tmp/settings-2.js');
-        expected = grunt.file.read('test/expected/settings-2.js');
+        expected = grunt.file.read('test/expected-output/settings-2.js');
         test.equal(actual, expected, 'generates settings file as expected');
 
         test.done();

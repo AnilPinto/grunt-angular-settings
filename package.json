@@ -1,39 +1,45 @@
 {
-  "name": "grunt-angular-settings",
-  "version": "0.0.5",
-  "description": "Read settings.json and create a angular constant for each setting and save them in settings.js file.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AnilPinto/grunt-angular-settings.git"
-  },
-  "author": {
-    "name": "Anil Pinto",
-    "email": "anil.leo.pinto@gmail.com"
-  },
-  "keywords": [
-    "angular-settings"
-  ],
-  "main": "Gruntfile.js",
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "licenses": [
-    {
-      "type": "MIT"
+    "name": "grunt-angular-settings",
+    "version": "0.1.0",
+    "description": "Read settings.json and create a angular constant for each setting and save them in settings.js file.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AnilPinto/grunt-angular-settings.git"
+    },
+    "contributors": [
+        {
+            "name": "Anil Pinto",
+            "email": "anil.leo.pinto@gmail.com"
+        },
+        {
+            "name": "Matthew J. Martin",
+            "email": "matthew.mar10@gmail.com"
+        }
+    ],
+    "keywords": [
+        "angular-settings"
+    ],
+    "main": "Gruntfile.js",
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "licenses": [
+        {
+            "type": "MIT"
+        }
+    ],
+    "dependencies": {
+        "grunt": "~0.4.2",
+        "deepmerge": "~0.2.7"
+    },
+    "devDependencies": {
+        "grunt-contrib-clean": "~0.5.0",
+        "grunt-contrib-jshint": "~0.8.0",
+        "grunt-contrib-nodeunit": "~0.3.0",
+        "jshint-stylish": "~0.1.5",
+        "load-grunt-tasks": "~0.3.0"
+    },
+    "scripts": {
+        "test": "grunt test"
     }
-  ],
-  "dependencies": {
-    "grunt": "~0.4.2",
-    "deepmerge": "~0.2.7"
-  },
-  "devDependencies": {
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-nodeunit": "~0.3.0",
-    "jshint-stylish": "~0.1.5",
-    "load-grunt-tasks": "~0.3.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  }
 }

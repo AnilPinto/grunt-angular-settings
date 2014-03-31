@@ -9,6 +9,24 @@
 /* jshint quotmark: double */
 
 /**
+ * extra settings block
+ */
+angular.module("ngSettings").constant("extraSettings", 12345);
+
+/**
+ * extraTwo settings block
+ */
+angular.module("ngSettings").constant("extraTwoSettings", {
+    "foo": "bar",
+    "other": [
+        1,
+        2,
+        3,
+        4
+    ]
+});
+
+/**
  * auth settings block
  */
 angular.module("ngSettings").constant("authSettings", {
