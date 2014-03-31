@@ -2,52 +2,68 @@
  * grunt-angular-settings
  * 
  *
- * Copyright (c) 2014 Anil Pinto
+ * Copyright (c) 2014 Monitise Americas, Inc.
  * Licensed under the MIT license.
  */
 
 'use strict';
 
+var merge = require('deepmerge');
+
 module.exports = function (grunt) {
 
-    // Please see the Grunt documentation for more information regarding task
-    // creation: http://gruntjs.com/creating-tasks
+    var description = 'Read settings.json and create a angular constant for each setting and save them in settings.js file.';
 
-    grunt.registerMultiTask('angularSettings', 'Read settings.json and create a angular constant for each setting and save them in settings.js file.', function () {
+    grunt.registerMultiTask('angularSettings', description, function () {
 
-        if(!isFileExist(this.data.options.settings)) {
-            throw new TypeError('AngularSettings: \'settings\' is missing');
-        }
+        var multiTaskTargetConfigPath = this.name + '.' + this.target,
+            settingsTargetConfigPath = multiTaskTargetConfigPath + '.settings',
+            // set up defaults
+            options = this.options({
+                prefix: '',
+                postfix: '',
+                spacesIndent: 4,
+                angularModuleName: 'ngSettings',
+                angularMethod: 'constant',
+                addTimestamp: true,
+                timestamp: false
+            }),
+            template = grunt.file.read(__dirname + '/_settings.js.template'),
+            targetOutputFile,
+            templateData,
+            inputFilePaths,
+            inputFilePath,
+            inputFiles,
+            inputFile,
+            inputJson,
+            i, j,
+            mergedJson,
+            renderedTemplate;
 
-        if(this.data.options.dest == null) {
-            throw new TypeError('AngularSettings: \'dest\' is missing');
-        }
-
-        var settingsData = "",
-            destFullFilepath = process.cwd() + "/" + this.data.options.dest,
-            settingsFullFilepath = process.cwd() + "/" + this.data.options.settings,
-            settingsJSON = grunt.file.readJSON(settingsFullFilepath);
-
-
-            for(var key in settingsJSON) {
-                settingsData += "angular.module('" + key + "').constant('" + key + "Settings', " + JSON.stringify(settingsJSON[key] , null, 4) + ");\n";
+        templateData = merge(options, this.data);
+        this.requiresConfig(settingsTargetConfigPath);
+        for (targetOutputFile in this.data.settings) {
+            inputFilePaths = this.data.settings[targetOutputFile];
+            if ('array' !== grunt.util.kindOf(inputFilePaths)) {
+                inputFilePaths = [ inputFilePaths ];
+            }
+            mergedJson = {};
+            for (i = 0; i < inputFilePaths.length; i++) {
+                inputFilePath = inputFilePaths[i];
+                inputFiles = grunt.file.expand(inputFilePath);
+                for (j = 0; j < inputFiles.length; j++) {
+                    inputFile = inputFiles[j];
+                    inputJson = grunt.file.readJSON(inputFile);
+                    mergedJson = merge(mergedJson, inputJson);
+                }
             }
 
-            grunt.file.write(destFullFilepath,settingsData);
-    });
+            templateData.settingsBlocks = mergedJson;
+            renderedTemplate = grunt.template.process(template, {
+                data: templateData
+            });
 
-    /**
-     * If parameter is not null then prepend the cwd and check if file exist.
-     * If exist then return true else false.
-     * @param filepath
-     * @returns {boolean}
-     */
-    function isFileExist(filepath) {
-        if(filepath== null ) {
-            return false;
+            grunt.file.write(targetOutputFile, renderedTemplate);
         }
-
-        var fullFilepath = process.cwd() + "/" + filepath;
-        return grunt.file.exists(fullFilepath);
-    }
+    });
 };
