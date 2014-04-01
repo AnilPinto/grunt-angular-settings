@@ -14,6 +14,10 @@ module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
+
+        sampleInputDir: 'test/sample-input',
+        tmpDir: 'tmp',
+
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -37,10 +41,10 @@ module.exports = function (grunt) {
             },
             target: {
                 settings: {
-                    'tmp/settings-1.js': [
-                        'test/sample-input/settings-1*'
+                    '<%= tmpDir %>/settings-1.js': [
+                        '<%= sampleInputDir %>/settings-1*'
                     ],
-                    'tmp/settings-2.js': 'test/sample-input/settings-2.json'
+                    '<%= tmpDir %>/settings-2.js': '<%= sampleInputDir %>/settings-2.json'
                 }
             }
         },

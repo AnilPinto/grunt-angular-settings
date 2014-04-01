@@ -30,6 +30,7 @@ module.exports = function (grunt) {
             }),
             template = grunt.file.read(__dirname + '/_settings.js.template'),
             targetOutputFile,
+            targetOutputFileConfigExpanded,
             templateData,
             inputFilePaths,
             inputFilePath,
@@ -47,7 +48,8 @@ module.exports = function (grunt) {
         this.requiresConfig(settingsTargetConfigPath);
         for (targetOutputFile in this.data.settings) {
             inputFilePaths = this.data.settings[targetOutputFile];
-            grunt.verbose.writeln('Building settings data for target ouput file ' + targetOutputFile + ' from sources: ', inputFilePaths);
+            targetOutputFileConfigExpanded = grunt.config.process(targetOutputFile);
+            grunt.verbose.writeln('Building settings data for target ouput file ' + targetOutputFileConfigExpanded + ' from sources: ', inputFilePaths);
             if ('array' !== grunt.util.kindOf(inputFilePaths)) {
                 grunt.verbose.write('Source paths for ' + targetOutputFile + ' specified as string; converting to array...');
                 inputFilePaths = [ inputFilePaths ];
@@ -55,7 +57,7 @@ module.exports = function (grunt) {
             }
             mergedJson = {};
             for (i = 0; i < inputFilePaths.length; i++) {
-                inputFilePath = inputFilePaths[i];
+                inputFilePath = grunt.config.process(inputFilePaths[i]);
                 inputFiles = grunt.file.expand(inputFilePath);
                 if (!inputFiles.length) {
                     grunt.verbose.warn('No files found for path: ', inputFilePath);
@@ -75,7 +77,7 @@ module.exports = function (grunt) {
             });
             grunt.verbose.ok();
 
-            grunt.file.write(targetOutputFile, renderedTemplate);
+            grunt.file.write(targetOutputFileConfigExpanded, renderedTemplate);
         }
     });
 };

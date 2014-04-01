@@ -1,6 +1,6 @@
 {
     "name": "grunt-angular-settings",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Read settings.json and create a angular constant for each setting and save them in settings.js file.",
     "repository": {
         "type": "git",
