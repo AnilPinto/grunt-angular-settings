@@ -52,6 +52,12 @@ module.exports = function (grunt) {
         // Unit tests.
         nodeunit: {
             tests: ['test/*test.js']
+        },
+
+        github: {
+            repo: 'matmar10/grunt-angular-settings',
+            usernameVar: 'GITHUB_USERNAME', //ENVIRONMENT VARIABLE that contains Github username
+            passwordVar: 'GITHUB_PASSWORD' //ENVIRONMENT VARIABLE that contains Github password
         }
 
     });
