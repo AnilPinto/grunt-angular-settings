@@ -7,6 +7,11 @@
 'use strict';
 
 /* jshint quotmark: double */
+
+<% if (angularCreateModule) { %>
+angular.module("<%= angularModuleName %>", []);
+<% } %>
+
 <% _.forEach(settingsBlocks, function (settingsBlockValue, settingsBlockName) { %>
 /**
  * <%= settingsBlockName %> settings block

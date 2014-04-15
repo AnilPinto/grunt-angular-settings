@@ -24,6 +24,7 @@ module.exports = function (grunt) {
                 postfix: '',
                 spacesIndent: 4,
                 angularModuleName: 'ngSettings',
+                angularCreateModule: true,
                 angularMethod: 'constant',
                 addTimestamp: true,
                 timestamp: false

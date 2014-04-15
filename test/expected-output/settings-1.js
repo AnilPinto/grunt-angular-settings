@@ -8,6 +8,11 @@
 
 /* jshint quotmark: double */
 
+
+angular.module("ngSettings", []);
+
+
+
 /**
  * extra settings block
  */
